@@ -51,6 +51,7 @@ def call_history(method: Callable) -> Callable:
 class Cache:
     """cache class"""
     def __init__(self):
+        """initialize package"""
         self._redis = redis.Redis()
         self._redis.flushdb()
 
