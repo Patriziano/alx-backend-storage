@@ -38,6 +38,7 @@ def call_history(method: Callable) -> Callable:
 
     @wraps(method)
     def wrapper(self, *args, **kwargs):
+        """wrapper function"""
         kinputs = method.__qualname__ + ":inputs"
         koutputs = method.__qualname__ + ":outputs"
         self._redis.rpush(kinputs, str(args))
@@ -56,6 +57,7 @@ class Cache:
     @call_history
     @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
+        """store function"""
         key = str(uuid.uuid4())
 
         self._redis.set(key, data)
@@ -77,4 +79,5 @@ class Cache:
         return self.get(key, fn=lambda x: x.decode('utf-8'))
 
     def get_int(self, key: str) -> Union[int, None]:
+        """get_str method"""
         return self.get(key, fn=lambda x: int(x) if x else None)
